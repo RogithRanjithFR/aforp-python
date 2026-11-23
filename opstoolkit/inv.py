@@ -37,6 +37,11 @@ def aligned (servers) :
 
 
 
+def print_table(servers: list[dict], threshold:int):
+	print (f"{'NOM':<10}{'IP':<12}{'ROLE':<8}{'CPU':>5} ETAT")
+
+
+print_table (servers, 90)
 print (aligned(servers))
 print (*sorted(servers, key = lambda s: s["cpu"], reverse = True), sep= '\n', )
 print (count_by_role(servers))
