@@ -22,7 +22,7 @@ def down_servers(servers) :
 
 
 
-def overloaded(servers, threshold) : 
+def overloaded(servers, threshold: int = 90) : 
 	overloaded = []
 	for s in servers:
 		if s["cpu"] > threshold:
@@ -36,12 +36,30 @@ def aligned (servers) :
 		print (s)
 
 
+def print_table(servers: list[dict], threshold: int = 90):
+    print(f"{'NOM':<10}{'IP':<12}{'ROLE':<8}{'CPU':>5}  ETAT")
+    print("-" * 42)
+    for s in sorted(servers, key=lambda s: s["cpu"], reverse=True):
+        if not s["up"]:
+            etat = "DOWN"
+        elif s["cpu"] > threshold:
+            etat = "SURCHARGE"
+        else:
+            etat = "OK"
+        print(f"{s['name']:<10}{s['ip']:<12}{s['role']:<8}{s['cpu']:>4}%  {etat}")
 
-def print_table(servers: list[dict], threshold:int):
-	print (f"{'NOM':<10}{'IP':<12}{'ROLE':<8}{'CPU':>5} ETAT")
+
+print_table(servers)
+print("Par rôle :", count_by_role(servers))
+print("Éteints :", down_servers(servers))
+print("Surchargés :", overloaded(servers))
 
 
-print_table (servers, 90)
+
+
+
+
+print (f"{'NOM':<10}{'IP':<12}{'ROLE':<8}{'CPU':>5} ETAT")
 print (aligned(servers))
 print (*sorted(servers, key = lambda s: s["cpu"], reverse = True), sep= '\n', )
 print (count_by_role(servers))
