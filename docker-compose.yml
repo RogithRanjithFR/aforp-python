@@ -1,0 +1,70 @@
+# Labo AFORP — Python scripting pour le DevOps et le Cloud
+# Démarrage : docker compose up -d --build   |   Vérification : ./scripts/check_lab.sh
+# Tous les ports sont liés à 127.0.0.1 : ne jamais les ouvrir sur le réseau de l'école.
+name: aforp-python
+
+services:
+  web:
+    image: nginx:1.27-alpine
+    container_name: lab-web
+    ports: ["127.0.0.1:8081:80"]
+    networks: [labnet]
+
+  redis:
+    image: redis:7-alpine
+    container_name: lab-redis
+    ports: ["127.0.0.1:6379:6379"]
+    networks: [labnet]
+
+  db:
+    image: postgres:16-alpine
+    container_name: lab-db
+    environment:
+      POSTGRES_PASSWORD: aforp-lab
+      POSTGRES_DB: cloudnova
+    ports: ["127.0.0.1:5432:5432"]
+    networks: [labnet]
+
+  status-api:
+    build: ./status-api
+    container_name: lab-status-api
+    environment:
+      STATUS_API_TOKEN: aforp-demo-token
+    ports: ["127.0.0.1:8000:8000"]
+    networks: [labnet]
+
+  minio:
+    image: bitnamilegacy/minio:2025.7.23-debian-12-r5
+    container_name: lab-minio
+    #command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: aforp
+      MINIO_ROOT_PASSWORD: aforp-lab-secret
+    ports: ["127.0.0.1:9000:9000", "127.0.0.1:9001:9001"]
+    networks: [labnet]
+
+  ssh1:
+    image: lscr.io/linuxserver/openssh-server:latest
+    container_name: lab-ssh1
+    hostname: srv-app01
+    environment:
+      USER_NAME: ops
+      USER_PASSWORD: ops-lab
+      PASSWORD_ACCESS: "true"
+    ports: ["127.0.0.1:2221:2222"]
+    networks: [labnet]
+
+  ssh2:
+    image: lscr.io/linuxserver/openssh-server:latest
+    container_name: lab-ssh2
+    hostname: srv-app02
+    environment:
+      USER_NAME: ops
+      USER_PASSWORD: ops-lab
+      PASSWORD_ACCESS: "true"
+    ports: ["127.0.0.1:2222:2222"]
+    networks: [labnet]
+
+networks:
+  labnet:
+    name: labnet
