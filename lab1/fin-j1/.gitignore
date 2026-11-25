@@ -1,0 +1,11 @@
+# Fichiers que Git ne doit jamais suivre. Un commentaire tient sur sa propre ligne.
+# Environnement virtuel : propre à chaque poste, il se recrée avec python3 -m venv .venv
+.venv/
+# Cache du bytecode que Python crée à l'import des modules
+__pycache__/
+# Fichiers de bytecode compilé qui se trouveraient hors de __pycache__
+*.pyc
+# Variables d'environnement locales : mots de passe et tokens n'entrent jamais dans Git
+.env
+# Cache de pytest, recréé à chaque lancement des tests
+.pytest_cache/
