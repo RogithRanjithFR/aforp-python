@@ -1,3 +1,0 @@
-État de référence du projet OpsToolkit à la fin du lundi. À donner le mardi matin aux équipes ou aux apprenants
-qui n'ont pas terminé les labs 1.2 à 1.5, pour qu'ils commencent le jour 2 avec tout le monde.
-Le livrable n°1 est noté le mardi à 16 h 15 : cette reprise ne donne aucun avantage sur la note.
