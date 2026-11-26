@@ -15,6 +15,9 @@ import logging
 # sys donne accès à sys.exit, qui transmet le code retour au shell
 import sys
 
+import json
+from collections import Counter
+
 # Journal propre à ce script : son nom « inventaire » le distingue des journaux des autres modules
 log = logging.getLogger("inventaire")
 # Champs obligatoires de chaque serveur ; un tuple, car cette liste ne change jamais
