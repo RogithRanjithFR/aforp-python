@@ -5,9 +5,6 @@ __pycache__/
 .pytest_cache/
 .coverage
 *.tar.gz
-*.swp
-*.swo
-*.swn
 rapport.*
 rapport-logs.json
 resultats*/
