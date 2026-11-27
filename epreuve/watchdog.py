@@ -30,8 +30,6 @@ def load_targets(path):
     return data["targets"]
 
 
-#Exigence 3
-
 
 def check_port(host, port, timeout=2.0):
     start = time.perf_counter()
@@ -42,8 +40,6 @@ def check_port(host, port, timeout=2.0):
         return False, None
     return True, int((time.perf_counter() - start) * 1000)
 
-
-#Exigence 4
 
 def check_http(url, timeout=2.0):
     """True seulement pour un statut 200."""
@@ -62,4 +58,38 @@ def check_target(target):
 
 
 
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(description="Vérifie des services.")
+    parser.add_argument("targets_file", metavar="FICHIER_CIBLES")
+    parser.add_argument("-o", "--output", default="watchdog-report.json")
+    parser.add_argument("-v", "--verbose", action="store_true")
+    args = parser.parse_args(argv)
+
+    logging.basicConfig(
+        level=logging.DEBUG if args.verbose else logging.INFO,
+        format="%(levelname)s %(message)s",
+    )
+
+    try:
+        targets = load_targets(args.targets_file)
+    except ValueError as e:
+        log.error("Fichier de cibles invalide : %s", e)
+        return 2
+
+    report = []
+    for target in targets:
+        entry = check_target(target)
+        log.debug("Résultat détaillé : %s", entry)
+        log.info("%s : %s", entry["name"], "OK" if entry["ok"] else "KO")
+        report.append(entry)
+
+    with open(args.output, "w", encoding="utf-8") as f:
+        json.dump(report, f, indent=2)
+
+    return 0 if all(e["ok"] for e in report) else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
 
