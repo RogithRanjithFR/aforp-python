@@ -1,0 +1,6 @@
+.venv/
+watchdog-report.json
+casse.yaml
+sans_targets.yaml
+sans_port.yaml
+ok.yaml
