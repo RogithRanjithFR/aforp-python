@@ -8,10 +8,13 @@ Codes retour : 0 = parc sain, 2 = au moins un serveur arrêté ou en surcharge, 
 """
 # argparse lit les arguments de la ligne de commande et génère l'aide --help
 import argparse
+
 # json convertit le texte du fichier en listes et dictionnaires Python
 import json
+
 # logging écrit les messages de suivi avec un niveau : DEBUG, INFO, WARNING, ERROR
 import logging
+
 # sys donne accès à sys.exit, qui transmet le code retour au shell
 import sys
 

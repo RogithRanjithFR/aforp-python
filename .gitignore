@@ -1,3 +1,14 @@
 .venv/
-_pycache_/
+__pycache__/
+*.pyc
 .env
+.pytest_cache/
+.coverage
+*.tar.gz
+rapport.*
+rapport-logs.json
+resultats*/
+event*.log
+*.swp
+*.swo
+*.swn
