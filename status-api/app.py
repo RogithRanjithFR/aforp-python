@@ -11,7 +11,7 @@ Endpoints :
 import math
 import os
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Query
 from pydantic import BaseModel
@@ -67,7 +67,7 @@ def list_incidents():
 @app.post("/incidents", status_code=201, dependencies=[Depends(check_token)])
 def create_incident(incident: IncidentIn):
     item = {"id": len(INCIDENTS) + 1, **incident.model_dump(),
-            "created_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+            "created_at": datetime.now(UTC).isoformat(timespec="seconds")}
     INCIDENTS.append(item)
     return item
 

@@ -33,25 +33,34 @@ Codes retour : 0 = tout va bien, 2 = erreur d'usage ou de configuration (convent
 """
 # argparse : lecture des sous-commandes et des options de la ligne de commande
 import argparse
+
 # csv : lecture et écriture de fichiers CSV (lab 2.2)
 import csv
+
 # json : écriture de fichiers JSON (labs 2.2 et 2.4)
 import json
+
 # logging : messages de suivi avec un niveau, distincts du résultat affiché par print
 import logging
+
 # re : expressions régulières, pour découper les lignes de log Nginx (lab 2.4)
 import re
+
 # sys : sys.exit transmet le code retour au shell
 import sys
+
 # Counter : dictionnaire spécialisé dans le comptage, avec la méthode most_common() (lab 2.4)
 from collections import Counter
+
 # datetime : date et heure de génération du rapport (lab 2.5)
 from datetime import datetime
+
 # Path : chemins de fichiers sous forme d'objets, avec l'opérateur / pour les assembler (lab 2.1)
 from pathlib import Path
 
 # yaml, fourni par le paquet PyYAML : lecture de l'inventaire (lab 2.3)
 import yaml
+
 # Environment : moteur de gabarits Jinja2, pour les rapports (lab 2.5)
 from jinja2 import Environment
 

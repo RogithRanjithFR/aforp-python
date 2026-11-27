@@ -3,7 +3,6 @@ import re
 from collections import Counter
 from pathlib import Path
 
-
 # Motif d'une ligne Nginx au format « combined » ; (?P<nom>…) est un groupe nommé, lu avec m["nom"]
 # TODO 21 : compléter les deux derniers groupes : statut (3 chiffres) et taille (chiffres, ou « - »).
 # Aide : \d{3} et \d+|-   (construire le motif sur regex101.com avec 3 vraies lignes du log)

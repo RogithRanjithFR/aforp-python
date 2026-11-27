@@ -58,40 +58,56 @@ Codes retour : 0 = tout va bien, 1 = une cible est KO (composant dégradé, cont
 """
 # argparse : lecture des sous-commandes et des options de la ligne de commande
 import argparse
+
 # hashlib : empreinte SHA-256 des archives (lab 4.4)
 import hashlib
+
 # json : corps des réponses de la fausse API de statut, pour les exemples
 import json
+
 # logging : messages de suivi sur la sortie d'erreur, distincts du résultat affiché par print
 import logging
+
 # os : variables d'environnement, où se lisent tous les secrets du jour
 import os
+
 # socket : connexions TCP des tests de ports (socle du jour 3)
 import socket
+
 # sys : sys.exit transmet le code retour au shell
 import sys
+
 # tarfile : archives .tar.gz (lab 4.4)
 import tarfile
+
 # threading : la fausse API de statut tourne dans un thread, pour les exemples
 import threading
+
 # time : mesure des durées (socle du jour 3) et pause entre deux mesures de l'exporteur (lab 4.5)
 import time
+
 # ThreadPoolExecutor : tests de ports en parallèle (socle du jour 3)
 from concurrent.futures import ThreadPoolExecutor
+
 # datetime : date et heure dans le nom des archives (lab 4.4)
 # (noqa : tant que les trous sont ouverts, ce module ne sert pas encore ; ruff --fix ne doit pas le retirer)
-from datetime import datetime  # noqa: F401
+from datetime import datetime
+
 # Serveur HTTP de la bibliothèque standard : la fausse API de statut des exemples
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
 # Path : chemins de fichiers sous forme d'objets
 from pathlib import Path
+
 # SimpleNamespace : objet à attributs libres, pour imiter client.meta du vrai client S3
 from types import SimpleNamespace
+
 # Découpage d'une URL et de ses paramètres, dans la fausse API de statut
 from urllib.parse import parse_qs, urlsplit
 
 # requests : requêtes HTTP (labs 4.1 et 4.5), installé depuis le jour 1
 import requests
+
 # yaml, fourni par le paquet PyYAML : lecture de l'inventaire (jour 2)
 import yaml
 
@@ -701,7 +717,7 @@ def create_app(inventory_path: str | Path | None = None):
             # Même fonction que la sous-commande inventory du jour 2
             return servers_of(load_inventory(path), env)
         # Environnement inconnu ou inventaire invalide
-        except InventoryError as exc:
+        except InventoryError:
             # TODO 13 : répondre 404, avec le message de l'exception comme détail, au lieu d'une liste vide.
             # Aide : diapositive 55 ; HTTPException se lève avec raise, et prend status_code et detail.
             raise HTTPException(status_code=404, detail=str(exec)) from exec  # <- TODO 13
@@ -839,7 +855,7 @@ def s3_client():
     """
     # Import ici : boto3 n'est installé qu'au lab 4.4
     # (noqa : boto3 ne sert qu'une fois le TODO 22 fermé ; ruff --fix ne doit pas le retirer)
-    import boto3  # noqa: F401
+    import boto3
 
     # Adresse de MinIO, ou None pour AWS ; « or None » transforme une variable vide en None
     endpoint = os.environ.get("S3_ENDPOINT_URL") or None
@@ -1213,7 +1229,7 @@ def start_exporter(servers: list[dict], port: int = 9105, interval: int = 15,
     """
     # Import ici : prometheus_client n'est installé qu'au lab 4.5
     # (noqa : start_http_server ne sert qu'une fois le TODO 35 fermé ; ruff --fix ne doit pas le retirer)
-    from prometheus_client import CollectorRegistry, start_http_server  # noqa: F401
+    from prometheus_client import CollectorRegistry, start_http_server
 
     # Registre propre à cet exporteur, et ses deux jauges
     registry = CollectorRegistry()
@@ -1277,7 +1293,7 @@ def cmd_serve(args: argparse.Namespace) -> int:
     """
     # Import ici : uvicorn n'est installé qu'au lab 4.2
     # (noqa : uvicorn ne sert qu'une fois le TODO 16 fermé ; ruff --fix ne doit pas le retirer)
-    import uvicorn  # noqa: F401
+    import uvicorn
 
     # Documentation interactive de l'API
     log.info("Documentation : http://%s:%d/docs", args.host, args.port)

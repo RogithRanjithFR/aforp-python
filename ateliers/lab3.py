@@ -36,7 +36,7 @@ Lab  Trous          Commandes de contrôle
                     python3 lab3.py health --env prod; echo "code=$?"               (db-prod KO, code=1)
                     docker start lab-db, puis relancer health                      (code=0)
 3.4  TODO 23 à 25   python3 lab3.py bench http://127.0.0.1:8000/slow                (8.0 s, puis 2.0 s)
-3.5  TODO 26 à 31   export OPS_SSH_PASSWORD=ops-lab
+3.5  TODO 26 à 31   export OPS_SSH_PASSWORD=<mot-de-passe>
                     python lab3.py ssh "hostname && uptime -p"                     (app01, app02, code=0)
                     unset OPS_SSH_PASSWORD; python lab3.py ssh hostname; echo "code=$?"    (code=2)
 
@@ -50,32 +50,44 @@ Codes retour : 0 = tout va bien, 1 = une cible est KO (disque en alerte, port ou
 """
 # argparse : lecture des sous-commandes et des options de la ligne de commande
 import argparse
+
 # json : affichage de l'état du poste en JSON (lab 3.1)
 import json
+
 # logging : messages de suivi sur la sortie d'erreur, distincts du résultat affiché par print
 import logging
+
 # os : variables d'environnement, pour le mot de passe SSH (lab 3.5)
 # (noqa : tant que les trous sont ouverts, ce module ne sert pas encore ; ruff --fix ne doit pas le retirer)
-import os  # noqa: F401
+import os
+
 # platform : nom et version du système, version de Python (lab 3.1)
 import platform
+
 # shutil : informations sur les disques, sans lancer de commande (lab 3.1) ; noqa : même raison que pour os
-import shutil  # noqa: F401
+import shutil
+
 # socket : nom d'hôte (lab 3.1) et connexions TCP (lab 3.3) ; noqa : même raison que pour os
-import socket  # noqa: F401
+import socket
+
 # subprocess : lancer une commande système, sans shell (lab 3.1)
 import subprocess
+
 # sys : sys.exit transmet le code retour au shell
 import sys
+
 # time : âge des fichiers (lab 3.2) et mesure des durées (labs 3.3 et 3.4)
 import time
+
 # ThreadPoolExecutor : groupe de threads, pour faire attendre plusieurs tests en même temps (labs 3.4 et 3.5)
 from concurrent.futures import ThreadPoolExecutor
+
 # Path : chemins de fichiers sous forme d'objets (lab 3.2)
 from pathlib import Path
 
 # requests : requêtes HTTP (lab 3.3), installé depuis le jour 1
 import requests
+
 # yaml, fourni par le paquet PyYAML : lecture de l'inventaire (jour 2)
 import yaml
 

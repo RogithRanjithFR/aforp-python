@@ -3,7 +3,6 @@ from datetime import datetime
 
 from jinja2 import Environment
 
-
 # Gabarit Markdown ; {{ … }} affiche une valeur, {% … %} est une instruction, {# … #} un commentaire
 # TODO 28 : dans le gabarit, remplacer la ligne {# TODO 28 … #} par une boucle {% for %} … {% endfor %}
 #           qui écrit une ligne de tableau par serveur, avec les ports séparés par des virgules.
