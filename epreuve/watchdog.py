@@ -30,6 +30,7 @@ def load_targets(path):
     return data["targets"]
 
 
+#Exigence 3
 
 
 def check_port(host, port, timeout=2.0):
@@ -42,7 +43,7 @@ def check_port(host, port, timeout=2.0):
     return True, int((time.perf_counter() - start) * 1000)
 
 
-
+#Exigence 4
 
 def check_http(url, timeout=2.0):
     """True seulement pour un statut 200."""
@@ -51,6 +52,13 @@ def check_http(url, timeout=2.0):
     except requests.RequestException:
         return False
 
+
+def check_target(target):
+    up, ms = check_port(target["host"], target["port"])
+    ok = up
+    if up and target.get("health_url"):
+        ok = check_http(target["health_url"])
+    return {"name": target["name"], "ok": ok, "ms": ms}
 
 
 
