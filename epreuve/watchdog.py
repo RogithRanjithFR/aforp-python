@@ -28,3 +28,30 @@ def load_targets(path):
             if key not in t:
                 raise ValueError(f"cible n°{i} : champ '{key}' manquant")
     return data["targets"]
+
+
+
+
+def check_port(host, port, timeout=2.0):
+    start = time.perf_counter()
+    try:
+        with socket.create_connection((host, port), timeout=timeout):
+            pass
+    except OSError:
+        return False, None
+    return True, int((time.perf_counter() - start) * 1000)
+
+
+
+
+def check_http(url, timeout=2.0):
+    """True seulement pour un statut 200."""
+    try:
+        return requests.get(url, timeout=timeout).status_code == 200
+    except requests.RequestException:
+        return False
+
+
+
+
+
